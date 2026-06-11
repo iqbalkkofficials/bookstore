@@ -40,7 +40,7 @@ function Profile() {
       <p  className="text-justify md:px-20 px-5 my-5">test paragrapth</p>
       <div className="md:px-40">
 {/* tabs */}
-        <div className="flex justify-center items-center my-8 font-medium text-lg">
+        <div className="flex justify-center items-center my-8 font-bold text-lg">
             <p onClick={()=> setCurrentTab(1)} className="{currentTab==1? 'p-4 border-gray-200 border-l border-r border-t rounded cursor-pointer':'p-4 border-gray-200 border-b rounded cursor-pointer'}">Upload Book</p>
             <p onClick={()=> setCurrentTab(2)} className="{currentTab==1? 'p-4 border-gray-200 border-l border-r border-t rounded cursor-pointer':'p-4 border-gray-200 border-b rounded cursor-pointer'}">Upload Book Status</p>
             <p onClick={()=> setCurrentTab(3)} className="{currentTab==1? 'p-4 border-gray-200 border-l border-r border-t rounded cursor-pointer':'p-4 border-gray-200 border-b rounded cursor-pointer'}">Purchase Book</p>
