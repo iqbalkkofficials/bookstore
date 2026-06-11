@@ -41,22 +41,22 @@ function Profile() {
       <div className="md:px-40">
 {/* tabs */}
         <div className="flex justify-center items-center my-8 font-bold text-lg">
-            <p onClick={()=> setCurrentTab(1)} className="{currentTab==1? 'p-4 border-gray-200 border-l border-r border-t rounded cursor-pointer':'p-4 border-gray-200 border-b rounded cursor-pointer'}">Upload Book</p>
-            <p onClick={()=> setCurrentTab(2)} className="{currentTab==1? 'p-4 border-gray-200 border-l border-r border-t rounded cursor-pointer':'p-4 border-gray-200 border-b rounded cursor-pointer'}">Upload Book Status</p>
-            <p onClick={()=> setCurrentTab(3)} className="{currentTab==1? 'p-4 border-gray-200 border-l border-r border-t rounded cursor-pointer':'p-4 border-gray-200 border-b rounded cursor-pointer'}">Purchase Book</p>
+            <p onClick={()=> setCurrentTab(1)} className={currentTab==1?'p-4 border-gray-200 border-l border-r border-t rounded cursor-pointer':'p-4 border-gray-200 border-b rounded cursor-pointer'}>Upload Book</p>
+            <p onClick={()=> setCurrentTab(2)} className={currentTab==2?'p-4 border-gray-200 border-l border-r border-t rounded cursor-pointer':'p-4 border-gray-200 border-b rounded cursor-pointer'}>Upload Book Status</p>
+            <p onClick={()=> setCurrentTab(3)} className={currentTab==3?'p-4 border-gray-200 border-l border-r border-t rounded cursor-pointer':'p-4 border-gray-200 border-b rounded cursor-pointer'}>Purchase Book</p>
         </div>
         {/* tab content */}
         {
             currentTab==1 &&
-            <div><UploadBook/></div>
+            <div className="p-2"><UploadBook/></div>
         }
         {
             currentTab==2 &&
-            <div><UploadBookStatus/></div>
+            <div className="p-2"><UploadBookStatus/></div>
         }
         {
             currentTab==3 &&
-            <div><PurchaseBook/></div>
+            <div className="p-2"><PurchaseBook/></div>
         }
       </div>
       <Footer />
