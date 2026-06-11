@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Auth({ insideRegisterRoute }) {
   console.log(insideRegisterRoute ? "Register" : "Login");
   return (
-    <div className="w-full min-h-screen flex justify-center items-center bg-[url(/landing.jpg)] bg-cover bg-center text-white">
+    <div className="w-full min-h-screen flex justify-center items-center bg-[url(/authBg.jpg)]  bg-cover  text-black">
       <div className="p-10 text-center">
         <h1 className="text-3xl font-bold">BOOK STORE</h1>
         <div
