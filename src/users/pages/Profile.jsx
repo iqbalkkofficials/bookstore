@@ -5,6 +5,7 @@ import { FaCircleCheck } from "react-icons/fa6";
 import UploadBook from "../components/UploadBook";
 import UploadBookStatus from "../components/UploadBookStatus";
 import PurchaseBook from "../components/PurchaseBook";
+import Edit from "../../users/components/Edit"
 
 function Profile() {
     const [currentTab,setCurrentTab] = useState(1)
@@ -35,6 +36,7 @@ function Profile() {
           <h1 className="font-bold md:text-3xl text-2xl">username</h1>
           <FaCircleCheck className="text-blue-600 pl-1" />
         </div>
+        <Edit />
       </div>
       <p  className="text-justify md:px-20 px-5 my-5">Bio</p>
       <p  className="text-justify md:px-20 px-5 my-5">test paragrapth</p>
