@@ -12,6 +12,7 @@ import AdminSettings from "./admin/pages/AdminSettings";
 import AdminResources from "./admin/pages/AdminResources";
 import Preloader from "./components/Preloader";
 import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,6 +40,7 @@ function App() {
 
         <Route path="/*" element={<Pnf />} />
       </Routes>
+      <ToastContainer position="top-center" autoClose={2500} theme="colored" />
     </>
   );
 }

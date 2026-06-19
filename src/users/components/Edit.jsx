@@ -19,7 +19,7 @@ function Edit() {
             <FaX onClick={()=>setOpenCanvas(false)}/>
           </div>
           <div className="my-5 flex items-center justify-center flex-col">
-            <label htmlFor="userProfile">
+            <label htmlFor="userProfile"className="pb-3">
               <input type="file" id="userProfile" hidden />
               <img
                 width={"100px"}
