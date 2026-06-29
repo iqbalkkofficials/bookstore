@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { FaFacebook, FaInstagram, FaTwitter, FaUser } from "react-icons/fa";
 import { Link,useNavigate } from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance";
 
 function Header() {
   const [token, setToken] = useState("");
@@ -70,7 +71,7 @@ function Header() {
                   width={"40px"}
                   height={"40px"}
                   style={{ borderRadius: "50%" }}
-                  src={dp == "" ? "/user.png" : dp}
+                  src={dp == "" ? "/user.png" : dp.startsWith('https://lh3.googleusercontent.com/')?dp:`${axiosInstance.defaults.baseURL}/uploads/${dp}`}
                   alt="profile icon"
                 />
               </button>
@@ -80,7 +81,7 @@ function Header() {
                   <Link to={"/profile"} className="flex">
                     Profile
                   </Link>
-                  <button onClick={logout}  className="flex cursor-pointer">Logout</button>
+                  <button onClick={logout} className="flex cursor-pointer">Logout</button>
                 </div>
               )}
             </div>

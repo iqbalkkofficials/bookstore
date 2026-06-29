@@ -170,7 +170,7 @@ function Auth({ insideRegisterRoute }) {
             {!insideRegisterRoute && (
               <div className="my-5 text-center">
                 <p>--------------------or-------------------</p>
-                <div>
+                <div className="flex justify-center items-center pt-2">
                   <GoogleLogin
                   onSuccess={(credentialResponse) => {
                     handleGoogleLogin(credentialResponse)

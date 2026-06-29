@@ -16,3 +16,9 @@ export const loginAPI = async (userData) => {
 export const googleLoginAPI = async (userData) => {
     return await apiService("POST","/google-login",userData)
 }
+
+//http://localhost:3000/users/6a3472108aefa1f6e0659b69 : put request by edit component when udate button click
+
+export const userUpdateAPI = async (id,userData) => {
+    return await apiService("PUT",`users/${id}`,userData)
+}

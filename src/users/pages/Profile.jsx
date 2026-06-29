@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Footer from "../../components/Footer";
 import Header from "../../users/components/Header";
 import { FaCircleCheck } from "react-icons/fa6";
@@ -6,9 +6,23 @@ import UploadBook from "../components/UploadBook";
 import UploadBookStatus from "../components/UploadBookStatus";
 import PurchaseBook from "../components/PurchaseBook";
 import Edit from "../../users/components/Edit"
+import { FaBiohazard } from "react-icons/fa";
+import axiosInstance from "../../api/axiosInstance";
 
 function Profile() {
     const [currentTab,setCurrentTab] = useState(1)
+    const [username , setUsername] = useState("")
+    const [dp,setDp] = useState("")
+    const [bio,setBio] = useState("")
+
+    useEffect(() => {
+        if (sessionStorage.getItem("user")) {
+          const user = JSON.parse(sessionStorage.getItem("user"));
+          setDp(user.picture);
+          setBio(user.bio)
+          setUsername(user.username)
+        }
+      }, []);
   return (
     <>
       <Header />
@@ -27,19 +41,19 @@ function Profile() {
           width={"200px"}
           height={"200px"}
           style={{ borderRadius: "50%" }}
-          src="/user.png"
+          src={dp == "" ? "/user.png" : dp.startsWith('https://lh3.googleusercontent.com/')?dp:`${axiosInstance.defaults.baseURL}/uploads/${dp}`}
           alt=""
         />
       </div>
       <div className="md:flex justify-between px-20 mt-5">
         <div className="flex items-center">
-          <h1 className="font-bold md:text-3xl text-2xl">username</h1>
+          <h1 className="font-bold md:text-3xl text-2xl">{username}</h1>
           <FaCircleCheck className="text-blue-600 pl-1" />
         </div>
         <Edit />
       </div>
       <p  className="text-justify md:px-20 px-5 my-5">Bio</p>
-      <p  className="text-justify md:px-20 px-5 my-5">test paragrapth</p>
+      <p  className="text-justify md:px-20 px-5 my-5">{FaBiohazard}</p>
       <div className="md:px-40">
 {/* tabs */}
         <div className="flex justify-center items-center my-8 text-lg">
