@@ -26,5 +26,31 @@ export const userUpdateAPI = async (id,userData) => {
 //http://localhost:3000/books : post request by uploadBook component when upload botton clicked
 
 export const addBookAPI = async (bookDetails) => {
-    return await apiService("POST",`books`,bookDetails)
+    return await apiService("POST",`/books`,bookDetails)
+}
+
+//http://localhost:3000/user-books: get request by bookstatus component when user loads
+export const getAllUserUploadBookAPI = async ()=> {
+    return await apiService("GET",`/user-books`)
+}
+
+//http://localhost:3000/user-books: delete request by bookstatus component when user deletes a book
+export const removeUserUploadBookAPI = async (bookId)=> {
+    return await apiService("DELETE",`/user-books/${bookId}`)
+}
+
+//http://localhost:3000/user-purchase-books: get request by purchase book component when user loads the page
+export const getAllUserPurchaseBookAPI = async ()=> {
+    return await apiService("GET",`/user-purchase-books`)
+}
+
+//http://localhost:3000/home-books: get request placed by home component when page landing page loads
+
+export const getLatestBookAPI = async ()=> {
+    return await apiService("GET",`/home-books`)
+}
+
+//http://localhost:3000/all-books: get request by admin resource component when page loads
+export const getAllAdminBookAPI = async ()=> {
+    return await apiService("GET",`/all-books`)
 }

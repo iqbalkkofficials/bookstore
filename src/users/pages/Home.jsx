@@ -3,8 +3,23 @@ import Header from "../components/Header";
 import Footer from "../../components/Footer";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { getLatestBookAPI } from "../../services/allAPI";
+import { useEffect } from "react";
 
 function Home() {
+
+  const [latestBooks,setLatestBooks]= useState([])
+
+  useEffect(()=>{
+    getHomePageBooks()
+  },[])
+
+  const getHomePageBooks = async ()=> {
+    const result = await getLatestBookAPI()
+    console.log(result.data)
+    setLatestBooks(result.data)
+  }
   return (
     <>
       <Header />
@@ -38,58 +53,26 @@ function Home() {
         <h1 className="text-4xl my-2">Explore Our Latest Collection</h1>
         <div className="md:grid grid-cols-4 w-full my-10">
           {/* card */}
-          <div className="shadow rounded p-3 m-4 md:my-0">
+          {
+            latestBooks?.length>0?latestBooks?.map(book=> (
+  <div key={book?._id} className="shadow rounded p-3 m-4 md:my-0">
             <img
               width={"100%"}
               height={"300px"}
-              src="/arrivalcard.jpg"
+              src={book?.imageURL}
               alt=""
             />
             <div className="flex flex-col justify-center items-center mt-4">
-              <h2 className="text-xl font-bold">Dan Brown</h2>
-              <h3 className="text-lg">The Da Vinci Code</h3>
-              <p className="font-bold text-red-600">$18</p>
+              <h2 className="text-xl font-bold">{book?.author}</h2>
+              <h3 className="text-lg">{book?.title}</h3>
+              <p className="font-bold text-red-600">{book?.discountPrice}</p>
             </div>
           </div>
-          <div className="shadow rounded p-3 m-4 md:my-0">
-            <img
-              width={"100%"}
-              height={"300px"}
-              src="/arrivalcard.jpg"
-              alt=""
-            />
-            <div className="flex flex-col justify-center items-center mt-4">
-              <h2 className="text-xl font-bold">Dan Brown</h2>
-              <h3 className="text-lg">The Da Vinci Code</h3>
-              <p className="font-bold text-red-600">$18</p>
-            </div>
-          </div>
-          <div className="shadow rounded p-3 m-4 md:my-0">
-            <img
-              width={"100%"}
-              height={"300px"}
-              src="/arrivalcard.jpg"
-              alt=""
-            />
-            <div className="flex flex-col justify-center items-center mt-4">
-              <h2 className="text-xl font-bold">Dan Brown</h2>
-              <h3 className="text-lg">The Da Vinci Code</h3>
-              <p className="font-bold text-red-600">$18</p>
-            </div>
-          </div>
-          <div className="shadow rounded p-3 m-4 md:my-0">
-            <img
-              width={"100%"}
-              height={"300px"}
-              src="/arrivalcard.jpg"
-              alt="book"
-            />
-            <div className="flex flex-col justify-center items-center mt-4">
-              <h2 className="text-xl font-bold">Dan Brown</h2>
-              <h3 className="text-lg">The Da Vinci Code</h3>
-              <p className="font-bold text-red-600">$18</p>
-            </div>
-          </div>
+            )): 
+            <p className="font-bold">Loading...</p>
+          }
+        
+          
         </div>
         <div className="text-center my-10">
           <Link to={"/books"} className="bg-black p-3 text-white">
