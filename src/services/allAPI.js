@@ -54,3 +54,18 @@ export const getLatestBookAPI = async ()=> {
 export const getAllAdminBookAPI = async ()=> {
     return await apiService("GET",`/all-books`)
 }
+
+// http://localhost:3000/books/6a4cb479d105e641d55bef59 : put request by admin resource component when approve btn clicked
+export const updateBookStatusAPI = async (bookId)=> {
+    return await apiService("PUT",`/books/${bookId}`)
+}
+
+// http://localhost:3000/all-users: get request by admin resource when tab 2
+export const getAllAdminUsersAPI = async ()=> {
+    return await apiService("GET",`/all-users`)
+}
+
+// http://localhost:3000/books: get request by all books component when page load when a user login
+export const getAllUserBookAPI = async ()=> {
+    return await apiService("GET",`/books`)
+}

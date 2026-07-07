@@ -36,7 +36,7 @@ function UploadBookStatus() {
               {
                 book?.status=="pending" ?
                 <img width={'100px'} height={'100px'} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv8Af3lKoJteihI4klbZwWNiFdnWX705OVJ8RztMKI_A&s=10' alt='pending'/>
-                :book?.staus =="approve" ?
+                :book?.status =="approve" ?
                 <img width={'100px'} height={'100px'} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0xpkw9wfUmxEfCQcYGT9uzLu2ndGWQm8cxSoxY7K2hA&s=10' alt='approve'/>:
                 <img width={'100px'} height={'100px'} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoRDQ4au37snvgSC-kJW_tRSvz0nNJTJ4dpHMSEcJtXQ&s=10' alt='sold'/>
               }
