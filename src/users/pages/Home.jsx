@@ -2,24 +2,44 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../../components/Footer";
 import { FaSearch } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { getLatestBookAPI } from "../../services/allAPI";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useContext } from "react";
+import { searchContext } from "../../context API/ContextShare";
 
 function Home() {
+  const [latestBooks, setLatestBooks] = useState([]);
+  const {searchKey,setSearchKey} = useContext(searchContext)
+  const navigate = useNavigate();
 
-  const [latestBooks,setLatestBooks]= useState([])
+  useEffect(() => {
+    getHomePageBooks();
+  }, []);
 
-  useEffect(()=>{
-    getHomePageBooks()
-  },[])
+  const getHomePageBooks = async () => {
+    const result = await getLatestBookAPI();
+    console.log(result.data);
+    setLatestBooks(result.data);
+  };
 
-  const getHomePageBooks = async ()=> {
-    const result = await getLatestBookAPI()
-    console.log(result.data)
-    setLatestBooks(result.data)
-  }
+  const handleSearch = () => {
+    if (!searchKey) {
+      toast.warning("Please input book title!!!");
+    } else if (!sessionStorage.getItem("token")) {
+      toast.warning("Please Login!!!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } else if (searchKey && sessionStorage.getItem("token")) {
+      navigate("/books");
+    } else {
+      toast.error("something went wrong");
+    }
+  };
+
   return (
     <>
       <Header />
@@ -36,11 +56,13 @@ function Home() {
           <p>Give your family and friends a book</p>
           <div className="mt-8 flex items-center">
             <input
+              onChange={(e) => setSearchKey(e.target.value)}
               type="text"
               placeholder="Search book here"
               className="rounded-4xl p-2 w-100 bg-white text-black"
             />
             <FaSearch
+              onClick={handleSearch}
               className="text-gray-500 cursor-pointer"
               style={{ marginLeft: "-40px" }}
             />
@@ -53,26 +75,27 @@ function Home() {
         <h1 className="text-4xl my-2">Explore Our Latest Collection</h1>
         <div className="md:grid grid-cols-4 w-full my-10">
           {/* card */}
-          {
-            latestBooks?.length>0?latestBooks?.map(book=> (
-  <div key={book?._id} className="shadow rounded p-3 m-4 md:my-0">
-            <img
-              width={"100%"}
-              height={"300px"}
-              src={book?.imageURL}
-              alt=""
-            />
-            <div className="flex flex-col justify-center items-center mt-4">
-              <h2 className="text-xl font-bold">{book?.author}</h2>
-              <h3 className="text-lg">{book?.title}</h3>
-              <p className="font-bold text-red-600">{book?.discountPrice}</p>
-            </div>
-          </div>
-            )): 
+          {latestBooks?.length > 0 ? (
+            latestBooks?.map((book) => (
+              <div key={book?._id} className="shadow rounded p-3 m-4 md:my-0">
+                <img
+                  width={"100%"}
+                  height={"300px"}
+                  src={book?.imageURL}
+                  alt=""
+                />
+                <div className="flex flex-col justify-center items-center mt-4">
+                  <h2 className="text-xl font-bold">{book?.author}</h2>
+                  <h3 className="text-lg">{book?.title}</h3>
+                  <p className="font-bold text-red-600">
+                    {book?.discountPrice}
+                  </p>
+                </div>
+              </div>
+            ))
+          ) : (
             <p className="font-bold">Loading...</p>
-          }
-        
-          
+          )}
         </div>
         <div className="text-center my-10">
           <Link to={"/books"} className="bg-black p-3 text-white">

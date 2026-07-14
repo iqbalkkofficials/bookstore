@@ -66,6 +66,11 @@ export const getAllAdminUsersAPI = async ()=> {
 }
 
 // http://localhost:3000/books: get request by all books component when page load when a user login
-export const getAllUserBookAPI = async ()=> {
-    return await apiService("GET",`/books`)
+export const getAllUserBookAPI = async (searchKey)=> {
+    return await apiService("GET",`/books?search=${searchKey}`)
+}
+
+// http://localhost:3000/books/6a4cb3f8d105e641d55bef58 : get request by view component when page open
+export const viewBookAPI = async (bookId)=> {
+    return await apiService("GET",`/books/${bookId}`)
 }
