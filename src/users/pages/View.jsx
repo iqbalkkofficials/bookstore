@@ -1,12 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { viewBookAPI } from "../../services/allAPI";
+import { purchaseBookAPI, viewBookAPI } from "../../services/allAPI";
 import { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../../components/Footer";
 import { FaBackward, FaCamera, FaEye } from "react-icons/fa";
 import axiosInstance from "../../api/axiosInstance";
+import { loadStripe } from "@stripe/stripe-js";
 
 function View() {
   const [bookDetails, setBookDetails] = useState({});
@@ -22,6 +23,16 @@ function View() {
   const getBookDetails = async () => {
     const result = await viewBookAPI(id);
     setBookDetails(result.data);
+  };
+
+  const purchaseBook = async () => {
+    const stripe = loadStripe(import.meta.env.VITE_STRIPE_PK);
+    // api call - update book buyer mail
+
+  const result = await purchaseBookAPI(id)
+  console.log(result)
+  const {checkoutURL} = result.data
+  window.location.href = checkoutURL
   };
   return (
     <>
@@ -64,7 +75,7 @@ function View() {
                   <FaBackward className="me-2" />
                   Back
                 </Link>
-                <button className="bg-green-800 text-white p-2 flex items-center font-bold">
+                <button onClick={purchaseBook} className="bg-green-800 text-white p-2 flex items-center font-bold">
                   Buy ${bookDetails?.discountPrice}
                 </button>
               </div>
@@ -72,40 +83,46 @@ function View() {
           </div>
         </div>
       </div>
-      {
-      modal && 
-       
-          <div
-            className="fixed inset-0 bg-gray-500/75 w-full h-full"
-            onClick={() => setModal(false)}
-          >
-            <div className="flex justify-center items-center min-h-screen">
+      {modal && (
+        <div
+          className="fixed inset-0 bg-gray-500/75 w-full h-full"
+          onClick={() => setModal(false)}
+        >
+          <div className="flex justify-center items-center min-h-screen">
             <div className="bg-white rounded md:w-250 w-100">
               <div className="bg-black text-white px-3 py-4 text-2xl">
                 <h1>Book Images</h1>
               </div>
               <div className="relative p-5">
-                <p className="text-blue-700 flex items-center"><FaCamera className="me-3"/>Camera clicks of the books</p>
+                <p className="text-blue-700 flex items-center">
+                  <FaCamera className="me-3" />
+                  Camera clicks of the books
+                </p>
                 <div className="md:flex flex-wrap my-4">
-                {/* duplicate book image */}
-                {
-                  bookDetails?.uploadImages?.length > 0 ?
-                  bookDetails?.uploadImages?.map(filename=>(
-                  <img className="md:w-75 w-25 md:me-2 mb-3 md:mt-0" src={`${axiosInstance.defaults.baseURL}/uploads/${filename}`} alt="books"/>
-                  ))
-                  :
-                  <div className="my-5 font-semi-bold"> Images are not available</div>
-                }
+                  {/* duplicate book image */}
+                  {bookDetails?.uploadImages?.length > 0 ? (
+                    bookDetails?.uploadImages?.map((filename) => (
+                      <img
+                        className="md:w-75 w-25 md:me-2 mb-3 md:mt-0"
+                        src={`${axiosInstance.defaults.baseURL}/uploads/${filename}`}
+                        alt="books"
+                      />
+                    ))
+                  ) : (
+                    <div className="my-5 font-semi-bold">
+                      {" "}
+                      Images are not available
+                    </div>
+                  )}
                 </div>
+              </div>
             </div>
           </div>
-          </div>
-          
         </div>
-      }
+      )}
       <Footer />
     </>
-  )
+  );
 }
 
 export default View;
