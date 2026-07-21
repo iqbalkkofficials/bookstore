@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -8,10 +8,12 @@ import { loginAPI } from "../services/allAPI";
 import { toast } from "react-toastify";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { routeContext } from "../context API/AuthGuard";
 
 function Auth({ insideRegisterRoute }) {
   console.log(insideRegisterRoute ? "Register" : "Login");
 
+  const {role,setRole,isAuthorised,setIsAuthorised} = useContext(routeContext)
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -55,10 +57,13 @@ function Auth({ insideRegisterRoute }) {
       toast.success("Login Successfull");
       sessionStorage.setItem("user", JSON.stringify(result.data.user));
       sessionStorage.setItem("token", result.data.token);
+      setIsAuthorised(true)
       setTimeout(() => {
         if (result.data.user.role == "admin") {
+          setRole("admin")
           navigate("/admin");
         } else {
+          setRole("user")
           navigate("/");
         }
       }, 2500);
@@ -78,10 +83,13 @@ function Auth({ insideRegisterRoute }) {
       toast.success("Login Successfull");
       sessionStorage.setItem("user", JSON.stringify(result.data.user));
       sessionStorage.setItem("token", result.data.token);
+      setIsAuthorised(true)
       setTimeout(() => {
         if (result.data.user.role == "admin") {
+          setRole("admin")
           navigate("/admin");
         } else {
+          setRole("user")
           navigate("/");
         }
       }, 2500);
